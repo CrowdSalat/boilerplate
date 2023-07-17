@@ -1,0 +1,6 @@
+vagrant/.vagrant
+vagrant/*-VBoxSVC-*.log
+vagrant/*-VBoxHeadless-*.log
+host_vars/VAGRANT/vagrant-ssh.cfg
+
+.vscode/settings.json

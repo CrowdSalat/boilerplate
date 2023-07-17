@@ -1,0 +1,6 @@
+- name: Playbook on Vagrant VM with local role
+  hosts: VAGRANT
+
+# role path is defined in ansible.cfg
+  roles:
+    - role: test-role

@@ -1,0 +1,7 @@
+- name: Playbook on Vagrant VM
+  hosts: VAGRANT
+
+  tasks:
+    - name: Print all Hostvars
+      debug:
+        msg: "{{ hostvars }}"

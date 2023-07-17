@@ -1,0 +1,4 @@
+ansible_ssh_common_args: '-F ./host_vars/VAGRANT/vagrant-ssh.cfg'
+
+# must match host in vagrant-ssh.cfg
+ansible_ssh_host: default

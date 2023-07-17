@@ -1,0 +1,12 @@
+- name: Playbook on localhost
+  hosts: localhost
+  # to prevent ssh
+  connection: local
+
+  vars:
+    test_var: 'Hello World'
+  tasks:
+    - name: Hello World
+      debug:
+        msg:
+          - "{{ test_var }}"
