@@ -1,1 +1,4 @@
+# prevents ssh
+ansible_connection: local
+
 bla: blubb
