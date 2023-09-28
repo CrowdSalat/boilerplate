@@ -1,0 +1,12 @@
+version: '3'
+services:
+  apache:
+    image: ubuntu/apache2:2.4-20.04_beta
+    ports:
+      - "80:80"
+    volumes:
+      - "./sites/:/etc/apache2/sites-enabled/"
+      - "./modules/:/etc/apache2/mods-additional/"
+      - "./logs/:/var/log/apache2/"
+      - "./default/apache2.conf:/etc/apache2/apache2.conf"
+    container_name: my-apache-server
