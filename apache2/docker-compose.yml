@@ -10,4 +10,5 @@ services:
       - "./logs/:/var/log/apache2/"
       - "./default/apache2.conf:/etc/apache2/apache2.conf"
       - ./test.html:/var/www/html/test/index.html
+      - ./apache_passwd:/etc/apache2/passwords
     container_name: my-apache-server
