@@ -3,7 +3,12 @@
 ```shell
 docker-compuse up
 
-curl whoami.localhost/test
+# dashboard
+curl http://localhost:8080/dashboard/#/
+
+#
+curl whoami.localhost/
+curl localhost/whoami
 
 # dashboard
 curl localhost:8080
