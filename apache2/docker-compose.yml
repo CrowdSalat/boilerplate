@@ -9,6 +9,17 @@ services:
       - "./modules/:/etc/apache2/mods-additional/"
       - "./logs/:/var/log/apache2/"
       - "./default/apache2.conf:/etc/apache2/apache2.conf"
-      - ./test.html:/var/www/html/test/index.html
-      - ./apache_passwd:/etc/apache2/passwords
+      - "./test.html:/var/www/html/test/index.html"
+      - "./apache_passwd:/etc/apache2/passwords"
     container_name: my-apache-server
+    labels:
+      # test traefik in front of apache
+      - "traefik.enable=true"
+      # http://test.localhost:443/ && http://test.localhost:443/test
+      - "traefik.http.routers.apache2.rule=Host(`test.localhost`)"
+      - "traefik.http.routers.apache2.entrypoints=web"
+
+networks:
+  default:
+      name: my_boilerplate_network
+      external: true

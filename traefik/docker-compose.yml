@@ -6,14 +6,14 @@ services:
     image: "traefik:v2.10"
     container_name: "traefik"
     command:
-      #- "--log.level=DEBUG"
+      - "--log.level=DEBUG"
       # Traefik will listen on port 8080 by default for API request.
       - "--api.insecure=true"
       # Enabling Docker provider
       - "--providers.docker=true"
       # Enable File Provider and watch dir
-      - "--providers.file.directory=/etc/traefik/dynamic_conf/"
-      - "--providers.file.watch=true"
+      # - "--providers.file.directory=/etc/traefik/dynamic_conf/"
+      # - "--providers.file.watch=true"
       # Do not expose containers unless explicitly told so
       - "--providers.docker.exposedbydefault=false"
       # Traefik will listen to incoming request on the port 80 (HTTP)
@@ -31,7 +31,12 @@ services:
       # Explicitly tell Traefik to expose this container
       - "traefik.enable=true"
       # The domain the service will respond to
-      #      - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
-      - "traefik.http.routers.whoami.rule=PathPrefix(`/whoami`)"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.localhost`)"
+      #- "traefik.http.routers.whoami.rule=PathPrefix(`/whoami`)"
       # Allow request only from the predefined entry point named "web"
       - "traefik.http.routers.whoami.entrypoints=web"
+
+networks:
+  default:
+      name: my_boilerplate_network
+      external: true
