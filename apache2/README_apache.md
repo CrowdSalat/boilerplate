@@ -4,13 +4,17 @@
 # start
 docker-compose up
 
-curl http://localhost:80/test/
-#user: bla
-# pw: bla
+# fileserver vhost (user: bla pw: bla)
+curl http://localhost:80/
+curl http://bla:bla@localhost:80/
 
 
 # reload config 
 docker exec -it my-apache-server /etc/init.d/apache2 reload
+
+# check config
+docker exec -it my-apache-server apache2ctl -S 
+
 # accesss container
 docker exec -it my-apache-server bash
 
