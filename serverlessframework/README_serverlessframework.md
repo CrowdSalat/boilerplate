@@ -7,6 +7,8 @@
 
 ## serverless azure function creation and usage
 
+[Documentation for azure plugin](https://www.serverless.com/plugins/serverless-azure-functions)
+
 ```shell
 # create azure function serverless framework project from template
 
