@@ -1,5 +1,4 @@
-# test-playbook
-
+# serverless stuff
 
 ## prerequisite
 
@@ -10,9 +9,11 @@
 [Documentation for azure plugin](https://www.serverless.com/plugins/serverless-azure-functions)
 
 ```shell
+# load nnode version
+nvm use
+
+
 # create azure function serverless framework project from template
-
-
 mkdir azure-function-python
 cd azure-function-python
 serverless create --template azure-python
