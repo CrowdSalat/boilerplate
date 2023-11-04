@@ -1,0 +1,12 @@
+[local_test]
+localhost
+
+[example:children]
+example_a
+example_b
+
+[example_a]
+HOSTNAME
+
+[example_b]
+HOSTNAME

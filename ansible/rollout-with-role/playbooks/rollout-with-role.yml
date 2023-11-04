@@ -1,0 +1,4 @@
+- name: "Rollout with role"
+  hosts: all
+  roles:
+    - role-example
