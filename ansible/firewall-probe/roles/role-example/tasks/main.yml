@@ -1,0 +1,55 @@
+---
+- name: create intermediate_firewall_allow_rules
+  set_fact:
+    intermediate_firewall_allow_rules: "{{ intermediate_firewall_allow_rules|default([]) + [{'hosts': item[0].value, 'port': item[1].port, 'in_firewall_group': item[1].firewall_group }] }}"
+  with_nested:
+  - "{{ firewall_groups | dict2items }}"
+  - "{{ target_firewall_groups_with_port }}"
+  when: item[0].key == item[1].firewall_group
+
+- name: fail playbook if there are no targets to test
+  fail:
+    msg: 
+      - "#############################################################################################"
+      - "Either the variable target_firewall_groups_with_port is not filled for the selected host"
+      - "or there is no matching firewall group entry in the variable firewall_groups in inventory/group_vars/all.yml"
+      - "#############################################################################################"
+  when: intermediate_firewall_allow_rules is undefined
+
+- name: print intermediate_firewall_allow_rules
+  debug: msg=" {{ item }}"
+  with_items: "{{ intermediate_firewall_allow_rules }}"
+  when: "debug_play"
+
+- name: create firewall_allow_rules
+  set_fact:
+    firewall_allow_rules: "{{ firewall_allow_rules|default([]) + [{'target_host': item.1, 'target_port': item.0.port, 'target_firewall_group': item.0.in_firewall_group }] }}"
+  with_subelements: 
+    - "{{ intermediate_firewall_allow_rules }}"
+    - hosts
+
+- name: print firewall_allow_rules
+  debug: msg=" {{ item }}"
+  with_items: "{{ firewall_allow_rules }}"
+  when: "debug_play"
+
+- name: check if ordered firewall allow-rules exist
+  wait_for:
+    host: "{{ item.target_host }}"
+    port: "{{ item.target_port }}"
+    state: started
+    delay: 0
+    timeout: "{{ probe_timeout_seconds }}"
+    msg: |
+      #############################################################################################
+      Either the firewall has blocked access or no process is listening on the port
+      
+      Whether a process is listening on the port can be checked on the target server with the following command: 
+      sudo lsof -i :PORT (e.g. sudo lsof -i :443)
+      
+      To temporarily start a web server on the port of the target server for the test 
+      the following command can be used:
+      sudo python3 -m http.server PORT (e.g. sudo python3 -m http.server 443)
+      #############################################################################################
+  with_items:
+    - "{{ firewall_allow_rules }}"

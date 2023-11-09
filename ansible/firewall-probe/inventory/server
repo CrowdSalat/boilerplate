@@ -1,0 +1,11 @@
+[local_test]
+localhost
+
+# firewall groups
+
+[group_bla]
+host_a
+host_b
+
+[group_blubb]
+host_c

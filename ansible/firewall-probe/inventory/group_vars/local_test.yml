@@ -1,0 +1,7 @@
+ansible_connection: local
+
+debug_play: true
+
+# firewall_group must exist in inventory/group_vars/all.yml
+# example how to use it in inventory/group_vars/example.yml
+target_firewall_groups_with_port: []

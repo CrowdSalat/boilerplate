@@ -1,0 +1,5 @@
+- name: Check if target hosts are accessible on the specified ports
+  hosts: all
+  gather_facts: false
+  roles:
+    - role-example

@@ -1,0 +1,7 @@
+### unused group. Functions as example only ###
+# firewall_group must exist in inventory/group_vars/all.yml
+target_firewall_groups_with_port:
+  - firewall_group: group_bla
+    port: 443
+  - firewall_group: group_blubb
+    port: 443

@@ -1,0 +1,10 @@
+debug_play: false
+
+probe_timeout_seconds: 1
+
+firewall_groups:
+  group_bla:
+    - host_a
+    - host_b
+  group_blubb:
+    - host_c
