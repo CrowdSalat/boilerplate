@@ -6,6 +6,13 @@
 ansible-playbook debug_on_local.yml
 ```
 
+## run inside of container
+
+```shell
+docker run --name ansible-container --rm -v$PWD:/data/ -it cytopia/ansible:2.13-tools /bin/bash
+ansible-playbook debug_on_local.yml
+```
+
 ## run on vagrant vm
 
 [Prerequisite](./vagrant/README.md)
