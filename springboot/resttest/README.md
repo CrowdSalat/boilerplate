@@ -26,6 +26,8 @@ sdk install java 17.0.5-tem
 
 # when facing IDLE and errors in gradle
 gradle --stop
+#or when this occurs "Timeout waiting to lock journal cache (/Users/wej/.gradle/caches/journal-1). It is currently in use by another Gradle instance."
+find ~/.gradle -type f -name "*.lock" -delete
 ```
 
 ## sources
