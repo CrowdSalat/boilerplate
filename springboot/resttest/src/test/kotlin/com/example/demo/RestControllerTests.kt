@@ -56,6 +56,9 @@ class RestControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(invalidExampleDtoJson))
             .andExpect(MockMvcResultMatchers.status().isBadRequest())
+        // test validators
+        // the next line does no complile in kotlin but works in java
+        //.andExpect(result -> assertInstanceOf(MethodArgumentNotValidException.class, result.getResolvedException())
     }
 
 }
