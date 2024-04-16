@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: propertylogger
+  name: propertylogger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: propertylogger
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: propertylogger
+    spec:
+      containers:
+        - image: propertylogger:local
+          # important
+          imagePullPolicy: IfNotPresent
+          name: propertylogger
+          resources: {}
