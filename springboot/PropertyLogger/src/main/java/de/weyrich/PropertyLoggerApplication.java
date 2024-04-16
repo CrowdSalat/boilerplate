@@ -32,7 +32,7 @@ public class PropertyLoggerApplication {
 				.map(ps -> ((EnumerablePropertySource<?>) ps).getPropertyNames())
 				.flatMap(Arrays::stream)
 				.distinct()
-				.filter(prop ->  !prop.toLowerCase().contains("password"))
+				//.filter(prop ->  !prop.toLowerCase().contains("password"))
 				.forEach(prop -> log.info("{}: {}", prop, env.getProperty(prop)));
 		log.info("===========================================");
 	}

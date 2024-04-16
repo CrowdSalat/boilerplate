@@ -16,8 +16,22 @@ spec:
         app: propertylogger
     spec:
       containers:
-        - image: propertylogger:local
-          # important
+        - image: propertylogger:local2
+          # imagePullPolicy is important to use imported local image. Always would pull from dockerhub or similar registry
           imagePullPolicy: IfNotPresent
           name: propertylogger
           resources: {}
+          env:
+            # - name: SPRING_CONFIG_ADDITIONALLOCATION
+            #   value: /app/secrets/
+            - name: SPRING_CLOUD_KUBERNETES_CONFIG_ENABLED
+              value: "false"
+            - name: SPRING_CLOUD_KUBERNETES_SECRETS_PATHS
+              value: /app/secrets/
+          volumeMounts:
+            - name: secret-properties
+              mountPath: /app/secrets/
+      volumes:
+        - name: secret-properties
+          secret:
+            secretName: secret-properties

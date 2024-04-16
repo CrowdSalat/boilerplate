@@ -29,7 +29,11 @@ k3d image import propertylogger:local --cluster local
 
 # TEST properties
 k apply -f ./k8s
-k logs deployments/propertylogger --follow
+k logs deployments/propertylogger 
+
+k exec deployments/propertylogger -it -- /bin/bash
+k exec deployments/propertylogger -- ls /app/secrets
+// 
 
 # stop local cluster
 k3d cluster stop local
