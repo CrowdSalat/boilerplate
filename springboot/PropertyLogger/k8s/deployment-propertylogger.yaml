@@ -30,8 +30,13 @@ spec:
               value: /app/secrets/
           volumeMounts:
             - name: secret-properties
-              mountPath: /app/secrets/
+              mountPath: /app/secrets/firstsecret/
+            - name: secret-properties-2
+              mountPath: /app/secrets/secondsecret/
       volumes:
         - name: secret-properties
           secret:
             secretName: secret-properties
+        - name: secret-properties-2
+          secret:
+            secretName: secret-properties-2
