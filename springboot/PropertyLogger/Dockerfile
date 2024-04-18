@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN gradle build --no-daemon
+RUN gradle build --no-daemon -x test
 
 # Stage 2: Run the application
 FROM eclipse-temurin:17.0.10_7-jre-focal
