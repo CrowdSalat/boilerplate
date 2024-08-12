@@ -39,7 +39,6 @@ workspace {
         # system context view for 
         systemContext exampleSoftwareSystem "System-context-diagram" {
             include *
-            autoLayout
         }
         # container view
         container exampleSoftwareSystem "Container-diagram" {
