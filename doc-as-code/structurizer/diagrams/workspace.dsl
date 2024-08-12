@@ -7,11 +7,14 @@ workspace {
 
     model {
         # software systems
-
+            
+        // curly braces/body can be ommited if you do not need to define containers
         exampleSoftwareSystem = softwareSystem "My observed system" "description for my observed system" "observed-system" {
-            // curly braces/body can be ommited if you do not need to define containers
-            webapp = container "Web Application"
-            database = container "Database"
+            database = container "Database" 
+            webapp = container "Web Application" {
+                c1 = component "Component 1"    
+                c2 = component "Component 2" 
+            }
 
         }
 
@@ -23,31 +26,41 @@ workspace {
 
         # relationships
         exampleExternalSoftwareSystem -> exampleSoftwareSystem "Uses"
+        // if ommited the next relation from a child is used
         exampleUser -> exampleSoftwareSystem "Uses"
         webapp -> database "Reads from and writes to"
-
+        exampleUser -> c1 "Does specific stuff as wellUses"
+        c1 -> c2 "Does specific stuff"
+        c2 -> database "Reads from and writes to"
     }
 
 
     views {
-        // system context view for 
+        # system context view for 
         systemContext exampleSoftwareSystem "System-context-diagram" {
             include *
             autoLayout
         }
-
+        # container view
         container exampleSoftwareSystem "Container-diagram" {
             include *
             autoLayout
         }
 
+        # component view
+        component webapp {
+            include *
+            autoLayout lr
+        }
+
         // color blue and use symbol for person
         styles {
+            // uses tag as reference instead of type
             element "observed-system" {
                 background #1168bd
                 color #ffffff
             }
-        
+            // uses tag as reference instead of type
             element "external-system" {
                 background #999999
                 color #ffffff
@@ -62,6 +75,11 @@ workspace {
                 background #1168bd
                 color #ffffff
             }
+            element "Component" {
+                background #85BBF0
+                color #ffffff
+            }
+            
         }
         
     }
