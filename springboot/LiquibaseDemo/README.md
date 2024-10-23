@@ -1,0 +1,4 @@
+# LiquibaseDemo
+
+## Liquibase file structure
+
