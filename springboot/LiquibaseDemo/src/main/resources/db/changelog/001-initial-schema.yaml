@@ -1,11 +1,12 @@
 databaseChangeLog:
   -  changeSet:
-       id:  insertIntoTable-example
+       id:  createTable-example
        author:  liquibase-docs
        changes:
-         -  insert:
-              tableName: person
+         -  createTable:
               columns:
                 -  column:
                      name:  address
-                     value:  "Straße"
+                     type:  varchar(255)
+              remarks:  A String
+              tableName:  person
