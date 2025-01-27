@@ -1,4 +1,4 @@
-package de.weyrich.example.springsecurity;
+package de.weyrich.example.springsecurity.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

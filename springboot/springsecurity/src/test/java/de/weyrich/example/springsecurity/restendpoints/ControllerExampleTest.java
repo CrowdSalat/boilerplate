@@ -1,4 +1,4 @@
-package de.weyrich.example.springsecurity;
+package de.weyrich.example.springsecurity.restendpoints;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class SpringSecurityApplicationTests {
+class ControllerExampleTest {
 
     @Autowired
     private MockMvc mockMvc;
