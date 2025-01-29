@@ -11,7 +11,7 @@ Uses spring oauth2 resource-server dependecy to check if a jwt token is signed b
 
 allows traffic to:
 
-- actuators 
+- actuators
 - h2 console
 - swagger-ui
 
