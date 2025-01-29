@@ -1,38 +1,37 @@
 package de.weyrich.example.springsecurity.security;
 
+import java.security.interfaces.RSAPublicKey;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public AuthenticationManager authManager(
-            HttpSecurity http,
-            CustomAuthenticationProvider authProvider) throws Exception {
+        @Value("${key.location}")
+        private RSAPublicKey key;
 
-        AuthenticationManagerBuilder authenticationManagerBuilder = http
-                .getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.authenticationProvider(authProvider);
-        return authenticationManagerBuilder.build();
-    }
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+                return httpSecurity.authorizeHttpRequests(authorize ->
+                // Here we set authentication for all endpoints
+                authorize.anyRequest().authenticated())
+                                // Here we enable that we will accept JWTs
+                                .oauth2ResourceServer(configure -> configure.jwt(Customizer.withDefaults()))
+                                .build();
+        }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/**")
-                        .permitAll())
-                // .hasAnyRole("ADMIN").anyRequest()
-                // .authenticated())
-                .build();
-    }
+        @Bean
+        public JwtDecoder jwtDecoder() {
+                return NimbusJwtDecoder.withPublicKey(this.key).build();
+        }
 
 }
