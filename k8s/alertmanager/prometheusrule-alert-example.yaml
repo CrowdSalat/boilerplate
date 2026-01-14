@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: example-alert
+  namespace: test-namespace
+  labels:
+    scope: user-workload
+    product: test-namespace
+spec:
+  # For documentation, refer to:
+  # - Custom Resource (CR) documentation: https://docs.redhat.com/en/documentation/openshift_container_platform/latest/html/monitoring_apis/prometheusrule-monitoring-coreos-com-v1
+  # - Prometheus "Alerting rules" documentation: https://prometheus.io/docs/prometheus/latest/configuration/alerting_rules/
+  groups:
+    - name: mygroup
+      rules:
+        - alert: ExampleAlert
+          expr: up == 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Instance down"
+            description: "Instance {{ $labels.instance }} is down"
