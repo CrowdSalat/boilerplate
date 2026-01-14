@@ -1,0 +1,29 @@
+# SEE https://access.redhat.com/solutions/7060300
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: grafana-cluster-logging-application-view
+  namespace: nsgrafana
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-logging-application-view
+subjects:
+- kind: ServiceAccount
+  name: grafana-serviceaccount
+  namespace: nsgrafana
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: grafana-admin
+  namespace: nsgrafana
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- kind: ServiceAccount
+  name: grafana-serviceaccount
+  namespace: nsgrafana

@@ -1,0 +1,33 @@
+# https://grafana.github.io/grafana-operator/docs/api/#grafanadatasource
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: prometheus-grafanadatasource
+  namespace: nsgrafana
+spec:
+  allowCrossNamespaceImport: false
+  resyncPeriod: 5m
+  instanceSelector:
+    matchLabels:
+      label: toMatchGrafanaInstnace
+  datasource:
+    name: metrics
+    type: prometheus
+    access: proxy
+    editable: false
+    isDefault: false
+    url: https://thanos-querier.openshift-monitoring.svc.cluster.local:9092
+    jsonData:
+      customQueryParameters: namespace=namespaceForMetricCollection
+      httpHeaderName1: Authorization
+      httpMethod: GET
+      timeInterval: 5s
+      tlsSkipVerify: false
+    secureJsonData:
+      httpHeaderValue1: Bearer ${token}
+  valuesFrom:
+  - targetPath: secureJsonData.httpHeaderValue1
+    valueFrom:
+      secretKeyRef:
+        key: token
+        name: grafana-serviceaccount-token

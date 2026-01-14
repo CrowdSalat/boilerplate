@@ -1,0 +1,37 @@
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: tempo-grafanadatasource
+  namespace: nsgrafana
+spec:
+  allowCrossNamespaceImport: false
+  resyncPeriod: 5m
+  instanceSelector:
+    matchLabels:
+      label: toMatchGrafanaInstnace
+  datasource:
+    name: tempo
+    type: tempo
+    access: proxy
+    editable: true
+    isDefault: false
+    url: http://tempo:3200
+    jsonData:
+      httpHeaderName1: Authorization
+      tlsSkipVerify: true
+      tracesToLogsV2:
+        datasourceUid: "loki"
+        spanStartTimeShift: "-1s" # Shift start slightly earlier to catch context
+        spanEndTimeShift: "1s" # Shift end slightly later
+        filterByTraceID: false
+        filterBySpanID: false
+        customQuery: true
+        query: '{k8s_namespace_name="${__span.tags["k8s.namespace.name"]}",k8s_pod_name="${__span.tags["k8s.pod.name"]}"}'
+    secureJsonData:
+      httpHeaderValue1: 'Bearer ${token}'
+  valuesFrom:
+    - targetPath: secureJsonData.httpHeaderValue1
+      valueFrom:
+        secretKeyRef:
+          key: token
+          name: grafana-serviceaccount-token

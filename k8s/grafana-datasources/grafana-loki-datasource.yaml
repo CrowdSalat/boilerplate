@@ -1,0 +1,30 @@
+# https://grafana.github.io/grafana-operator/docs/api/#grafanadatasource
+apiVersion: grafana.integreatly.org/v1beta1
+kind: GrafanaDatasource
+metadata:
+  name: loki-grafanadatasource
+  namespace: nsgrafana
+spec:
+  allowCrossNamespaceImport: false
+  resyncPeriod: 5m
+  instanceSelector:
+    matchLabels:
+      label: toMatchGrafanaInstnace
+  datasource:
+    name: loki
+    type: loki
+    access: proxy
+    editable: false
+    isDefault: false
+    url: https://logging-loki-gateway-http.openshift-logging:8080/api/logs/v1/application/#
+    secureJsonData:
+      httpHeaderValue1: 'Bearer ${token}'
+    jsonData:
+      httpHeaderName1: Authorization
+      tlsSkipVerify: true
+  valuesFrom:
+    - targetPath: secureJsonData.httpHeaderValue1
+      valueFrom:
+        secretKeyRef:
+          key: token
+          name: grafana-serviceaccount-token
